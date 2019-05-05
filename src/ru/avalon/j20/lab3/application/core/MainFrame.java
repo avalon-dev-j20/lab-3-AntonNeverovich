@@ -1,44 +1,21 @@
 package ru.avalon.j20.lab3.application.core;
 
-import ru.avalon.j20.lab3.application.calculator.Calculator;
-
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainFrame extends JFrame {
 
-    private String title;
-    private LayoutManager layoutManager;
-    private Dimension dimension;
+    public MainFrame() {}
 
     /**
-     * Класс - конструктор главного окна приложения.
-     * @param title название приложения, заголовок окна
-     * @param layoutManager менеджер компоновки
-     * @param dimension размеры
+     * Метод размещает приложение рядом с другим приложением
      */
-    public MainFrame(String title, LayoutManager layoutManager, Dimension dimension) {
-        this.title = title;
-        this.layoutManager = layoutManager;
-        this.dimension = dimension;
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setTitle(title);
-        setPreferredSize(dimension);
-        setLayout(layoutManager);
-        setVisible(true);
-    }
-
-    public Dimension getDimension() {
-        return this.dimension;
-    }
-
-    /**
-     * Метод размещает приложение по центру экрана
-     */
-    public void setToNext() {
-        Dimension screenDimention = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        int x = Calculator.mainFrame.getWidth() + 5;
+    public void positionNextToApplication(JFrame frame) {
+        int x = frame.getWidth() + 5;
         int y = 0;
         setBounds(x, y, getWidth(), getHeight());
     }
+
 }

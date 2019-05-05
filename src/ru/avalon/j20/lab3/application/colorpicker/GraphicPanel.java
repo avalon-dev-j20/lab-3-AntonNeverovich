@@ -6,14 +6,9 @@ import java.awt.*;
 /**
  * Класс создающий графическую панель,
  * на которой будут отображаться графические компоненты:
- * в данном случае - прямоугольник, объект класса RectangeArea
- * @see RectangeArea
+ * в данном случае - прямоугольник
  */
 public class GraphicPanel extends JPanel {
-
-    // Объект класса прямоугольник RectangeArea
-    // Сейчас не используется
-    // private RectangeArea rectangle;
 
     /**
      * Конструктуор класса.
@@ -22,20 +17,12 @@ public class GraphicPanel extends JPanel {
      * размер и видимость
      */
     public GraphicPanel() {
-//  Не используется
-//        rectangle = new RectangeArea(0, 0,
-//                (int)(ColorPicker.getMainFrame().getDimension().getHeight() - 5),
-//                (int)(ColorPicker.getMainFrame().getDimension().getHeight()) - 5);
-        setSize(new Dimension((int)(ColorPicker.getMainFrame().getDimension().getHeight()),
-                (int)(ColorPicker.getMainFrame().getDimension().getHeight())));
         setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
         setVisible(true);
     }
 
     /**
      *  Метод отвечающий за отрисовку компонентов на данной панели.
-     *  Графические компоненты передаются
-     * @param graphics
      */
     @Override
     protected void paintComponent(Graphics graphics) {
@@ -45,7 +32,6 @@ public class GraphicPanel extends JPanel {
 
     /**
      * Метод описывающий логику отрисовки прямоугольника
-     * @param graphics
      */
     private void drawRectangle(Graphics graphics) {
         Graphics2D g2 = (Graphics2D) graphics;
@@ -58,9 +44,5 @@ public class GraphicPanel extends JPanel {
         int h = getHeight();
         g2.drawRect(0, 0, w, h);
         g2.fillRect(0, 0, w, h);
-// Другой вариант с использованием объекта типа RectangleArea
-// @see RectangleArea
-//        g2.fill(rectangle);
-//        g2.draw(rectangle);
     }
 }

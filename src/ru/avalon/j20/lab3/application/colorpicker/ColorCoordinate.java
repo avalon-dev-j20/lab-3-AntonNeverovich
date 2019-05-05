@@ -1,4 +1,4 @@
-package ru.avalon.j20.lab3.application.core;
+package ru.avalon.j20.lab3.application.colorpicker;
 
 public class ColorCoordinate {
 

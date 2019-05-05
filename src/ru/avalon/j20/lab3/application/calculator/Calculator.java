@@ -5,51 +5,60 @@ import ru.avalon.j20.lab3.application.core.*;
 import javax.swing.*;
 import java.awt.*;
 
-public class Calculator {
+public class Calculator extends MainFrame {
 
-    public static MainFrame mainFrame;
-    private static JLabel resultLabel;
-    private static String buffer = "0"; // переменная для записи введенных значений на калькуляторе
-    private static int operand = 0;
-    private static double var_1 = 0.0;
+    private MainFrame mainFrame;
+    private JLabel resultLabel;
+    private String buffer = "0"; // переменная для записи введенных значений на калькуляторе
+    private int operand = 0;
+    private double var_1 = 0.0;
 
-    private static Font buttonFont = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
-    private static Font resultFont = new Font(Font.SANS_SERIF, Font.PLAIN, 60);
+    private Font buttonFont = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
+    private Font resultFont = new Font(Font.SANS_SERIF, Font.PLAIN, 60);
 
     // Кнопки
-    private static JButton button_0 = createButton("0");
-    private static JButton button_1 = createButton("1");
-    private static JButton button_2 = createButton("2");
-    private static JButton button_3 = createButton("3");
-    private static JButton button_4 = createButton("4");
-    private static JButton button_5 = createButton("5");
-    private static JButton button_6 = createButton("6");
-    private static JButton button_7 = createButton("7");
-    private static JButton button_8 = createButton("8");
-    private static JButton button_9 = createButton("9");
-    private static JButton button_sum = createButton("+");
-    private static JButton button_dif = createButton("-");
-    private static JButton button_mult = createButton("*");
-    private static JButton button_div = createButton("/");
-    private static JButton button_ce = createButton("CE");
-    private static JButton button_point = createButton(".");
-    private static JButton resultButton = createButton("=");
+    private final JButton BUTTON_0 = createButton("0");
+    private final JButton BUTTON_1 = createButton("1");
+    private final JButton BUTTON_2 = createButton("2");
+    private final JButton BUTTON_3 = createButton("3");
+    private final JButton BUTTON_5 = createButton("5");
+    private final JButton BUTTON_4 = createButton("4");
+    private final JButton BUTTON_6 = createButton("6");
+    private final JButton BUTTON_7 = createButton("7");
+    private final JButton BUTTON_8 = createButton("8");
+    private final JButton BUTTON_9 = createButton("9");
+    private final JButton BUTTON_SUM = createButton("+");
+    private final JButton BUTTON_DIF = createButton("-");
+    private final JButton BUTTON_MULT = createButton("*");
+    private final JButton BUTTON_DIV = createButton("/");
+    private final JButton BUTTON_CE = createButton("CE");
+    private final JButton BUTTON_point = createButton(".");
+    private final JButton BUTTON_RESULT = createButton("=");
+
+    public Calculator() {
+    }
 
     /**
      * Метод, запускающий приложение.
      */
-    public static void run() {
+    public void run() {
         System.out.println( Calculator.class.getSimpleName() + " starts...");
 
         int x = 450, y = 600; // размеры окна
-        mainFrame = new MainFrame("Calculator",
-                new BorderLayout(),
-                new Dimension(x, y));
+        mainFrame = MainFrameFactory.buildAppFrame(
+                                                "Calculator",
+                                                    new BorderLayout(),
+                                                    new Dimension(x, y));
+
+
 
         // максимальные и минимальные размеры окна
-        mainFrame.setMinimumSize(new Dimension((int)(x / 1.5), (int)(y / 1.5)));
-        mainFrame.setMaximumSize(new Dimension((int)(x * 1.5), (int)(y * 1.5)));
+        final Dimension MINIMAL_SIZE = new Dimension((int)(mainFrame.getWidth() / 1.5), (int)(mainFrame.getHeight() / 1.5));
+        final Dimension MAXIMUM_SIZE = new Dimension((int)(mainFrame.getWidth() * 1.5), (int)(mainFrame.getWidth() * 1.5));
+        mainFrame.setMinimumSize(MINIMAL_SIZE);
+        mainFrame.setMaximumSize(MAXIMUM_SIZE);
         mainFrame.setResizable(false);
+
 
         addInterface();
         mainFrame.pack();
@@ -59,10 +68,10 @@ public class Calculator {
     /**
      * Метод добавляющий интерфейс.
      */
-    private static void addInterface() {
+    private void addInterface() {
 
         // создаем главную панель
-        JPanel mainPanel = createMainPanel();
+        JPanel mainPanel = mainPanelFactory();
 
         // Создаем метку для вывода результата
         resultLabel = createResultView();
@@ -73,34 +82,34 @@ public class Calculator {
         buttonPanel.setLayout(new GridLayout(4, 4));
 
         // первая строка элементов
-        buttonPanel.add(button_7);
-        buttonPanel.add(button_8);
-        buttonPanel.add(button_9);
-        buttonPanel.add(button_sum);
+        buttonPanel.add(BUTTON_7);
+        buttonPanel.add(BUTTON_8);
+        buttonPanel.add(BUTTON_9);
+        buttonPanel.add(BUTTON_SUM);
 
         // вторая строка элементов
-        buttonPanel.add(button_4);
-        buttonPanel.add(button_5);
-        buttonPanel.add(button_6);
-        buttonPanel.add(button_dif);
+        buttonPanel.add(BUTTON_4);
+        buttonPanel.add(BUTTON_5);
+        buttonPanel.add(BUTTON_6);
+        buttonPanel.add(BUTTON_DIF);
 
         // третья строка элементов
-        buttonPanel.add(button_1);
-        buttonPanel.add(button_2);
-        buttonPanel.add(button_3);
-        buttonPanel.add(button_mult);
+        buttonPanel.add(BUTTON_1);
+        buttonPanel.add(BUTTON_2);
+        buttonPanel.add(BUTTON_3);
+        buttonPanel.add(BUTTON_MULT);
 
         // четвертая строка элементов
-        buttonPanel.add(button_ce);
-        buttonPanel.add(button_0);
-        buttonPanel.add(button_point);
-        buttonPanel.add(button_div);
+        buttonPanel.add(BUTTON_CE);
+        buttonPanel.add(BUTTON_0);
+        buttonPanel.add(BUTTON_point);
+        buttonPanel.add(BUTTON_DIV);
 
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
 
         // Создаем кнопку равно
-        resultButton.setFont(resultFont);
-        mainPanel.add(resultButton, BorderLayout.SOUTH);
+        BUTTON_RESULT.setFont(resultFont);
+        mainPanel.add(BUTTON_RESULT, BorderLayout.SOUTH);
 
         // Добавляем обработчики для кнопок ввода
         addListener();
@@ -113,19 +122,19 @@ public class Calculator {
     /**
      * Метод, добавляющий логику работы приложения
      */
-    private static void addListener() {
-        button_1.addActionListener(e -> onClickEnterButton("1"));
-        button_2.addActionListener(e -> onClickEnterButton("2"));
-        button_3.addActionListener(e -> onClickEnterButton("3"));
-        button_4.addActionListener(e -> onClickEnterButton("4"));
-        button_5.addActionListener(e -> onClickEnterButton("5"));
-        button_6.addActionListener(e -> onClickEnterButton("6"));
-        button_7.addActionListener(e -> onClickEnterButton("7"));
-        button_8.addActionListener(e -> onClickEnterButton("8"));
-        button_9.addActionListener(e -> onClickEnterButton("9"));
+    private void addListener() {
+        BUTTON_1.addActionListener(e -> onClickEnterButton("1"));
+        BUTTON_2.addActionListener(e -> onClickEnterButton("2"));
+        BUTTON_3.addActionListener(e -> onClickEnterButton("3"));
+        BUTTON_4.addActionListener(e -> onClickEnterButton("4"));
+        BUTTON_5.addActionListener(e -> onClickEnterButton("5"));
+        BUTTON_6.addActionListener(e -> onClickEnterButton("6"));
+        BUTTON_7.addActionListener(e -> onClickEnterButton("7"));
+        BUTTON_8.addActionListener(e -> onClickEnterButton("8"));
+        BUTTON_9.addActionListener(e -> onClickEnterButton("9"));
 
         // Отдельный обработчик для нуля
-        button_0.addActionListener(e -> {
+        BUTTON_0.addActionListener(e -> {
             if (buffer.equals("0")) {
                 resultLabel.setText(buffer);
             } else {
@@ -135,31 +144,37 @@ public class Calculator {
         });
 
         // Отдельный обарботчик для точки
-        button_point.addActionListener(e -> {
+        BUTTON_point.addActionListener(e -> {
             buffer = buffer + ".";
             resultLabel.setText(buffer);
         });
 
         // Обработчик для кнопки обнуления
-        button_ce.addActionListener(e -> {
+        BUTTON_CE.addActionListener(e -> {
             buffer = "0";
             resultLabel.setText(buffer);
         });
 
         // Обработчики для арифметических операций
-        button_sum.addActionListener(e -> setOperand(1));
-        button_dif.addActionListener(e -> setOperand(2));
-        button_mult.addActionListener(e -> setOperand(3));
-        button_div.addActionListener(e -> setOperand(4));
+        BUTTON_SUM.addActionListener(e -> setOperand(1));
+        BUTTON_DIF.addActionListener(e -> setOperand(2));
+        BUTTON_MULT.addActionListener(e -> setOperand(3));
+        BUTTON_DIV.addActionListener(e -> setOperand(4));
 
         // Обработчик кнопки равно для записи результата в буфер
-        resultButton.addActionListener(e -> CopyBuffer.copyToClipboard(buffer));
+        BUTTON_RESULT.addActionListener(e -> {
+            try {
+                CopyBuffer.copyToClipboard(buffer);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         // Обработчик кнопки равно для вычислений
-        resultButton.addActionListener(e -> getResult());
+        BUTTON_RESULT.addActionListener(e -> getResult());
     }
 
-    private static void getResult() {
+    private void getResult() {
         double result;
         if (operand == 1) { // сложение
             result = var_1 + Double.valueOf(buffer);
@@ -184,7 +199,7 @@ public class Calculator {
      * Метод указывающий на то, кнопка какой арифметической операции была нажата.
      * @param i индекс операнда
      */
-    private static void setOperand(int i) {
+    private void setOperand(int i) {
         var_1 = Double.valueOf(buffer);
         operand = i;
         buffer = "0";
@@ -195,7 +210,7 @@ public class Calculator {
      * Метод описывающий логику обработки кнопок для ввода чисел
      * @param value значение, которое добавляет кнопка
      */
-    private static void onClickEnterButton(String value) {
+    private void onClickEnterButton(String value) {
         if (buffer.equals("0")) {
             resultLabel.setText(value);
             buffer = resultLabel.getText();
@@ -209,7 +224,7 @@ public class Calculator {
      * Метод создает компонент, отвечающий за вывод результатов вычислений
      * @return возвращает компонент JLabel
      */
-    private static JLabel createResultView() {
+    private JLabel createResultView() {
         JLabel label = new JLabel("", SwingConstants.RIGHT);
         label.setText(buffer);
         label.setFont(resultFont);
@@ -221,7 +236,7 @@ public class Calculator {
      * Метод создает главную панель, на которой будет создаваться весь интерфейс
      * @return возвращает главную панель
      */
-    private static JPanel createMainPanel() {
+    private JPanel mainPanelFactory() {
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         mainPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -232,10 +247,11 @@ public class Calculator {
      * Метод создет кнопку
      * @param name имя кнопки
      */
-    private static JButton createButton(String name) {
+    private JButton createButton(String name) {
         JButton button = new JButton(name);
         button.setFont(buttonFont);
         return button;
     }
 
+    public MainFrame getMainFrame() { return mainFrame; }
 }
