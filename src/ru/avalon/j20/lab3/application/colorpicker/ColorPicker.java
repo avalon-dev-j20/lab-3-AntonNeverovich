@@ -4,6 +4,7 @@ import ru.avalon.j20.lab3.application.core.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Formatter;
 
 public class ColorPicker extends MainFrame {
 
@@ -16,6 +17,7 @@ public class ColorPicker extends MainFrame {
     private JSlider blueSlider;
 
     private String hexColor = colorCoordinate.getHexColor();
+
 
     public ColorPicker() {
     }
@@ -75,11 +77,11 @@ public class ColorPicker extends MainFrame {
         sliderPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         // Объекты на панели с ползунками
-        JLabel redLabel = new JLabel("Red[" + colorCoordinate.getR() + "]:\t");
+        JLabel redLabel = new JLabel(redColorLabelName());
         redLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        JLabel greenLabel = new JLabel("Green[" + colorCoordinate.getG() + "]:\t");
+        JLabel greenLabel = new JLabel(greenColorLabelName());
         greenLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        JLabel blueLabel = new JLabel("Blue[" + colorCoordinate.getB() + "]:\t");
+        JLabel blueLabel = new JLabel(blueColorLabelName());
         blueLabel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         // Обработчик для слайдеров (для всех идентичный),
@@ -97,7 +99,7 @@ public class ColorPicker extends MainFrame {
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-            redLabel.setText("Red[" + colorCoordinate.getR() + "]:\t" );
+            redLabel.setText(redColorLabelName());
             rectangle.repaint();
         });
 
@@ -114,8 +116,7 @@ public class ColorPicker extends MainFrame {
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-            greenLabel.setText("Green[" + colorCoordinate.getG() + "]:\t");
-            //labelColorCoordinate.setText(colorCoordinate.toString());
+            greenLabel.setText(greenColorLabelName());
             rectangle.repaint();
         });
 
@@ -132,8 +133,7 @@ public class ColorPicker extends MainFrame {
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
-            blueLabel.setText("Blue[" + colorCoordinate.getB() + "]:\t");
-            //labelColorCoordinate.setText(colorCoordinate.toString());
+            blueLabel.setText(blueColorLabelName());
             rectangle.repaint();
         });
 
@@ -165,14 +165,14 @@ public class ColorPicker extends MainFrame {
 
         // задаем расположение для ярлыка
         manager.setGridWidth(1)
-                .setWeights(0.2f, 0f)
+                .setWeights(0.15f, 0f)
                 .alignLeft()
                 .spaceRight(6);
         panel.add(label, manager.getConstraints());
 
         // задаем арсположение для слайдера
         manager.setGridWidth(6)
-                .setWeights(0.8f, 0f)
+                .setWeights(0.85f, 0f)
                 .alignLeft()
                 .fillHorizontally()
                 .span();
@@ -193,7 +193,31 @@ public class ColorPicker extends MainFrame {
         slider.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
     }
 
-    // Следующие два методв необходимы для инкапсуляции и обращения к переменным
+    // Следующие два метода необходимы для инкапсуляции и обращения к переменным
     public MainFrame getMainFrame() { return mainFrame; }
     public static ColorCoordinate getColorCoordinate() { return colorCoordinate; }
+
+    private String redColorLabelName() {
+        StringBuilder redColorValue = new StringBuilder();
+        Formatter formatter = new Formatter(redColorValue);
+        formatter.format("%03d", colorCoordinate.getR());
+        String formattedRedColorValue = redColorValue.toString();
+        return "Red[" + formattedRedColorValue + "]:\t\t";
+    }
+
+    private String greenColorLabelName() {
+        StringBuilder greenColorValue = new StringBuilder();
+        Formatter formatter = new Formatter(greenColorValue);
+        formatter.format("%03d", colorCoordinate.getG());
+        String formattedGreenColorValue = greenColorValue.toString();
+        return "Green[" + formattedGreenColorValue + "]:";
+    }
+
+    private String blueColorLabelName() {
+        StringBuilder blueColorValue = new StringBuilder();
+        Formatter formatter = new Formatter(blueColorValue);
+        formatter.format("%03d", colorCoordinate.getB());
+        String formattedBlueColorValue = blueColorValue.toString();
+        return "Blue[" + formattedBlueColorValue + "]:\t\t";
+    }
 }

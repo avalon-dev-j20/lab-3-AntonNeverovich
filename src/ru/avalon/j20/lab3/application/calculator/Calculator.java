@@ -16,6 +16,11 @@ public class Calculator extends MainFrame {
     private Font buttonFont = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
     private Font resultFont = new Font(Font.SANS_SERIF, Font.PLAIN, 60);
 
+    private int x = 450, y = 600; // размеры окна
+    private final Dimension MINIMAL_SIZE = new Dimension((int)(x / 1.5), (int)(y / 1.5));
+    private final Dimension MAXIMUM_SIZE = new Dimension((int)(x * 1.5), (int)(y * 1.5));
+
+
     // Кнопки
     private final JButton BUTTON_0 = createButton("0");
     private final JButton BUTTON_1 = createButton("1");
@@ -44,20 +49,19 @@ public class Calculator extends MainFrame {
     public void run() {
         System.out.println( Calculator.class.getSimpleName() + " starts...");
 
-        int x = 450, y = 600; // размеры окна
         mainFrame = MainFrameFactory.buildAppFrame(
                                                 "Calculator",
                                                     new BorderLayout(),
                                                     new Dimension(x, y));
 
-
-
         // максимальные и минимальные размеры окна
-        final Dimension MINIMAL_SIZE = new Dimension((int)(mainFrame.getWidth() / 1.5), (int)(mainFrame.getHeight() / 1.5));
-        final Dimension MAXIMUM_SIZE = new Dimension((int)(mainFrame.getWidth() * 1.5), (int)(mainFrame.getWidth() * 1.5));
+
         mainFrame.setMinimumSize(MINIMAL_SIZE);
         mainFrame.setMaximumSize(MAXIMUM_SIZE);
-        mainFrame.setResizable(false);
+
+        mainFrame.addComponentListener(new DisableToResize(mainFrame, MAXIMUM_SIZE));
+
+        //mainFrame.setResizable(false);
 
 
         addInterface();
@@ -254,4 +258,5 @@ public class Calculator extends MainFrame {
     }
 
     public MainFrame getMainFrame() { return mainFrame; }
+
 }
